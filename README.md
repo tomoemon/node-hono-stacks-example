@@ -3,17 +3,18 @@ Simple hono stacks on node composed of
 - valibot
 - react
 - tanstack router
+- biome
 
 # dev
 
 ```shell
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 # build
 
 ```shell
-npm run build
+pnpm run build
 cd dist/ && node index.js
 ```
