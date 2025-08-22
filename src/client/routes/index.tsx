@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { hc } from "hono/client"
 import { useEffect, useState } from "react"
-import type { HonoApiRoute } from "../../server/api"
+import { apiClient } from "../../server/api"
 
 export const Route = createFileRoute("/")({
     component: Index
@@ -22,14 +21,13 @@ function Index() {
 }
 
 function Hello() {
-    const api = hc<HonoApiRoute>("/api")
     const [response, setResponse] = useState<string | null>(null)
     useEffect(() => {
         ;(async function fetchData() {
-            const res = await api.hello.$get({ query: { name: "bob" } })
+            const res = await apiClient.hello.$get({ query: { name: "bob" } })
             setResponse((await res.json()).message)
         })()
-    }, [api])
+    }, [])
     return <div>{response}</div>
 }
 
@@ -43,11 +41,10 @@ function Counter() {
 }
 
 const ClockButton = () => {
-    const api = hc<HonoApiRoute>("/api")
     const [response, setResponse] = useState<string | null>(null)
 
     const handleClick = async () => {
-        const response = await api.clock.$get()
+        const response = await apiClient.clock.$get()
         const data = await response.json()
         const headers = Array.from(response.headers.entries()).reduce(
             (acc, [key, value]) => ({ ...acc, [key]: value }),

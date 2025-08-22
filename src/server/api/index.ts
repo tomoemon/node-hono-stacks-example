@@ -1,10 +1,9 @@
 import { vValidator } from "@hono/valibot-validator"
 import { Hono } from "hono"
+import { hc } from "hono/client"
 import { object, string } from "valibot"
 
-export const apiApp = new Hono()
-
-const route = apiApp
+export const apiRoute = new Hono()
     .get("/clock", (c) => {
         return c.json({
             time: new Date().toLocaleTimeString()
@@ -26,4 +25,5 @@ const route = apiApp
         }
     )
 
-export type HonoApiRoute = typeof route
+export type ApiType = typeof apiRoute
+export const apiClient = hc<ApiType>("/api")

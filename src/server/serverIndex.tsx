@@ -3,12 +3,12 @@ import { serveStatic } from "@hono/node-server/serve-static"
 import { Hono } from "hono"
 import { env } from "hono/adapter"
 import { renderToString } from "react-dom/server"
-import { apiApp } from "./api/index"
+import { apiRoute } from "./api/index"
 import type { AppEnv } from "./env"
 
 const app = new Hono()
 
-app.route("/api", apiApp)
+app.route("/api", apiRoute)
 app.use("/static/*", serveStatic({ root: "./" }))
 app.use("/public/*", serveStatic({ root: "./" }))
 app.get("*", (c) => {
